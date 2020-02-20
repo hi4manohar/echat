@@ -13,7 +13,7 @@ cd client
 npm run serve
 ```
 
-Visit `/login` and login using `nagent@hnxmail.com:pass`.
+Visit `/login` and login using `nagent@hnxmail.com` and `agentpassword1`.
 
 # Server
 
