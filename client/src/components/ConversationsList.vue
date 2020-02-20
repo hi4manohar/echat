@@ -6,7 +6,7 @@
     )
       // @TODO fetch once and get the user's detail here,
       // replacing the id
-      p {{ conversationsBlock[0].userId }} - {{ conversationsBlock.length }}
+      .name {{ getUser(conversationsBlock[0].userId).pName }}
       // List all user's conversations, click to activate and open in pane
       ConversationPreview(
         v-for="conversation in conversationsBlock"
@@ -26,11 +26,15 @@ export default {
     ConversationPreview,
   },
   computed: {
-    ...mapState(['conversations']),
+    ...mapState(['conversations', 'linkedUsers']),
 
     // @TODO replace with pagination
     selectedConversations() {
       return this.conversations.slice(0, 20)
+    },
+
+    getUser() {
+      return userId => this.linkedUsers[userId] || {}
     },
   },
 }
@@ -40,4 +44,8 @@ export default {
 .conversations-list
   height calc(100vh - 112px)
   overflow-y auto
+
+.conversations-block
+  margin 0 0 1em
+
 </style>

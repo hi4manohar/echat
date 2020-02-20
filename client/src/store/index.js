@@ -10,6 +10,8 @@ export default new Vuex.Store({
     currentUser: null,
     active: {},
     conversations: [[{}]],
+    linkedUsers: {},
+    linkedProfiles: {},
   },
   mutations: {
     SET_CURRENT_USER(state, val) {
@@ -21,13 +23,38 @@ export default new Vuex.Store({
     SET_ACTIVE(state, val) {
       state.active = val
     },
+    SET_LINKED_USERS(state, val) {
+      state.linkedUsers = val
+    },
+    SET_LINKED_PROFILES(state, val) {
+      state.linkedProfiles = val
+    },
   },
   actions: {
     /**
+     * Fetch linked data based on provided active data generically
+     */
+    async fetchLinked({ commit }, [ref, linkedIds, mutationName]) {
+      const allRef = fb.db.ref(ref)
+      // first, do a one-time fetch of all conversations
+      allRef.once('value', allSnapshot => {
+        const allData = allSnapshot.val()
+        const linkedData = {}
+        Object.keys(allData)
+          .filter(id => linkedIds.includes(id))
+          .map(id => {
+            linkedData[id] = allData[id]
+          })
+        commit(mutationName, linkedData)
+      })
+    },
+    /**
      * Get all conversations for current logged in user
      */
-    async fetchCurrentConversations({ state, commit }) {
+    async fetchCurrentConversations({ state, commit, dispatch }) {
       let currentConversations = []
+      const linkedUsersIds = []
+      const linkedProfileIds = []
       const currentAgentId = state.currentUser.uid
       const conversationRef = fb.db.ref('conversation')
       // first, do a one-time fetch of all conversations
@@ -50,7 +77,19 @@ export default new Vuex.Store({
           if (userLastMsgTimeMap[cvs.userId] < cvs.lastMsg.msgTime) {
             userLastMsgTimeMap[cvs.userId] = cvs.lastMsg.msgTime
           }
+          // at the same time, store the user's ID in active match list
+          !linkedUsersIds.includes(cvs.userId) &&
+            linkedUsersIds.push(cvs.userId)
+          !linkedProfileIds.includes(cvs.profileId) &&
+            linkedProfileIds.push(cvs.profileId)
         })
+        // dispatch user & profile fetch at the same time
+        dispatch('fetchLinked', ['profile', linkedUsersIds, 'SET_LINKED_USERS'])
+        dispatch('fetchLinked', [
+          'agent_profile',
+          linkedProfileIds,
+          'SET_LINKED_PROFILES',
+        ])
         // then, sort the list
         currentConversations = currentConversations.sort((a, b) => {
           // first, find the most recent user and get them to top
