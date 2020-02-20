@@ -38,6 +38,6 @@ export default {
 
 <style lang="stylus" scoped>
 .conversations-list
-  max-height calc(100vh - 112px)
-  overflow-y scroll
+  height calc(100vh - 112px)
+  overflow-y auto
 </style>
