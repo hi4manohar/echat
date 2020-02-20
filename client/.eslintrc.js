@@ -13,7 +13,9 @@ module.exports = {
     "prettier/prettier": [
       "warn",
       {
-        semi: false
+        semi: false,
+        singleQuote: true,
+        trailingComma: "es5"
       }
     ]
   }

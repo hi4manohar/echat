@@ -6,7 +6,7 @@
           v-toolbar(color="primary" flat)
             v-toolbar-title login
           v-card-text
-            v-form(@submit="submitLogin")
+            v-form
               v-text-field(
                 label="Email"
                 name="email"
@@ -21,25 +21,33 @@
                 type="password"
                 v-model="user.password"
               )
-          v-card-actions
-            v-spacer
-            v-btn(color="primary") Login
+            v-card-actions
+              v-spacer
+              v-btn(@click="submitLogin" color="primary") Login
 </template>
 
 <script>
+import fb from '../db/firebase.js'
+
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     user: {
       email: ``,
-      password: ``
-    }
+      password: ``,
+    },
   }),
   methods: {
-    submitLogin() {
-      // @TODO handle firebase auth
+    async submitLogin() {
+      // @TODO add try/catch and error here
+      const user = await fb.auth.signInWithEmailAndPassword(
+        this.user.email,
+        this.user.password
+      )
+      this.$store.commit('SET_CURRENT_USER', user.user)
+      this.$router.push('/dashboard')
       return true
-    }
-  }
+    },
+  },
 }
 </script>

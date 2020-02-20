@@ -1,10 +1,13 @@
-import Vue from "vue"
-import Vuetify from "vuetify/lib"
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
 
 Vue.use(Vuetify)
 
 export default new Vuetify({
+  options: {
+    customProperties: true,
+  },
   theme: {
-    dark: true
-  }
+    dark: true,
+  },
 })
