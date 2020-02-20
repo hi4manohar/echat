@@ -47,5 +47,4 @@ export default {
 
 .conversations-block
   margin 0 0 1em
-
 </style>

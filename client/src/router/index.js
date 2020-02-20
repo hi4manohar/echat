@@ -19,6 +19,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+
+  {
+    path: '/conversation',
+    name: 'Conversation',
+    component: () => import('../views/Conversation.vue'),
+    meta: {
+      requiresAuth: false,
+    },
+  },
 ]
 
 const router = new VueRouter({

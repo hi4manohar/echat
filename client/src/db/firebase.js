@@ -1,7 +1,7 @@
-import * as firebase from "firebase/app"
+import * as firebase from 'firebase/app'
 
-import "firebase/auth"
-import "firebase/database"
+import 'firebase/auth'
+import 'firebase/database'
 
 var firebaseConfig = require(`../config/firebase-secrets.js`)
 
@@ -14,5 +14,5 @@ const currentUser = auth.currentUser
 export default {
   db,
   auth,
-  currentUser
+  currentUser,
 }

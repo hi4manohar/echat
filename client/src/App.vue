@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <!-- <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <h1>eChat</h1>
       </div>
-    </v-app-bar>
+    </v-app-bar> -->
 
     <v-content>
       <router-view></router-view>
@@ -14,12 +14,12 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
 
   components: {},
 
   data: () => ({
     //
-  })
+  }),
 }
 </script>
