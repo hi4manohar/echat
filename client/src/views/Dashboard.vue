@@ -43,7 +43,7 @@ export default {
   height:100vh;
 .row
   height:100vh
-.col-3 
+.col-3
   padding: 0px 10px;
 .conversations-list
   height:100vh
@@ -90,5 +90,4 @@ footer
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 </style>

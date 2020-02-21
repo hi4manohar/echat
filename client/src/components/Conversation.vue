@@ -1,5 +1,5 @@
 <template lang="pug">
-  ..convcon
+  .convcon
     .chat-profile
       .agent-image
           img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
@@ -82,7 +82,7 @@ export default {
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.87);
     padding: 20px;
-.chat-footer 
+.chat-footer
   height:65px
   background:#357ae8
   padding: 7px 20px;

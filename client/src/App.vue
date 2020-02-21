@@ -29,7 +29,7 @@ export default {
   padding: 88px 0px 0px;
 html
   overflow-y: hidden !important;
-  
+
   /* width */
 ::-webkit-scrollbar {
   width: 4px;
@@ -49,5 +49,4 @@ html
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 </style>
