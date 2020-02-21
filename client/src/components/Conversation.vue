@@ -1,9 +1,8 @@
 <template lang="pug">
-  <div class="convcon">
-    <div class="chat-profile">
+  ..convcon
+    .chat-profile
       .agent-image
           img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
-    </div>
     .conversation(ref="conversation")
       .message-row(
         v-for="message in messages"
@@ -13,8 +12,7 @@
         
       //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
 
-    <div class="chat-footer"></div>
-  </div>
+    .chat-footer
 
 </template>
 
