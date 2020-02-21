@@ -44,6 +44,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
+  
 .conversations-list
   height calc(100vh - 88px)
   overflow-y auto

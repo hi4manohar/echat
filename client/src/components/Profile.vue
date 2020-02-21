@@ -1,14 +1,20 @@
 <template lang="pug">
-  .profile(v-if="!!data.pName")
-    // @TODO display all of user's info like pictures, location, etc
-    div(v-if="type === 'user'")
-      img(:src="data.pAvatars[0]")
-      .name {{ data.pName }}
-      .bio {{ data.pBio }}
-    div(v-if="type === 'agent'")
-      img(:src="data.pAvatars[0] | dcryptPAvatar")
-      .name {{ data.pName }}
-      .bio {{ data.pBio }}
+  div
+    .profile(v-if="!!data.pName")
+      // @TODO display all of user's info like pictures, location, etc
+      div.pimg(v-if="type === 'user'")
+        img(:src="data.pAvatars[0]")
+      div.pdetail(v-if="type === 'user'")
+        .name {{ data.pName }}
+        .bio {{ data.pBio }}
+      
+      div(v-if="type === 'agent'")
+        img(:src="data.pAvatars[0] | dcryptPAvatar")
+        .name {{ data.pName }}
+        .bio {{ data.pBio }}
+
+    div.pdetrow()
+
 </template>
 
 <script>
@@ -82,8 +88,33 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
+
+
 .profile
-  flex 1
+  padding:20px
+
+.pimg
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  overflow:hidden;
+  margin: 0 auto;
+
+.pimg img
+  width:100%;
+  height:100%
+
+.pdetail
+  text-align:center
+  padding:10px 0px
+  margin-bottom:10px;
+
+.pdetrow{
+  height:100px;
+  background:#1e1e1e;
+  border-radius:10px;
+}
 
 img
   max-width 15em

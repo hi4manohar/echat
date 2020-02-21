@@ -1,11 +1,20 @@
 <template lang="pug">
-  .conversation(ref="conversation")
-    .message-row(
-      v-for="message in messages"
-      :class="{ 'from-agent': message.fromAgent }"
-    )
-      .message {{ message.msgBody }}
-    //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
+  <div class="convcon">
+    <div class="chat-profile">
+      .agent-image
+          img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
+    </div>
+    .conversation(ref="conversation")
+      .message-row(
+        v-for="message in messages"
+        :class="{ 'from-agent': message.fromAgent }"
+      )
+        .message {{ message.msgBody }}<span class="timestamp">11:30 pm</span>
+        
+      //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
+
+    <div class="chat-footer"></div>
+  </div>
 
 </template>
 
@@ -62,10 +71,48 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.conversation
-  max-height calc(100vh - 144px)
-  overflow-y auto
+.convcon
+  height:100vh
 
+.chat-profile
+  height:65px
+  background:#1e1e1e
+  padding: 7px 20px;
+
+.conversation
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.87);
+    padding: 20px;
+.chat-footer 
+  height:65px
+  background:#357ae8
+  padding: 7px 20px;
+
+.conversations-list
+  height calc(100vh - 88px)
+  overflow-y auto
+.name
+  margin-left: 11px;
+
+.conversations-block
+  margin 0 0 1em
+.agent-image
+  height 49px
+  width 49px
+.agent-profile
+  flex none
+  display flex
+  align-items center
+.img-round
+  display block
+  position relative
+  transition opacity .15s ease-out
+  width 100%
+  height 100%
+  z-index 100
+  overflow hidden
+  border-radius 50%
 // @TODO improve styles
 .message-row
   display flex
@@ -73,9 +120,21 @@ export default {
   &.from-agent
     justify-content flex-end
     .message
-      background rgba(black,.4)
+      background:#080808
 
 .message
-  padding .5em
-  background rgba(white,.1)
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 9px 15px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #e0e0e0;
+  margin-bottom:5px;
+
+.timestamp
+  font-size:10px
+  margin-left: 2px;
+  display: block;
+  text-align: right;
+  color: #9e9e9e;
 </style>
