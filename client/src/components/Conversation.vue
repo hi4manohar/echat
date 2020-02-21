@@ -63,7 +63,7 @@ export default {
 
 <style lang="stylus" scoped>
 .conversation
-  max-height calc(100vh - 112px)
+  max-height calc(100vh - 144px)
   overflow-y auto
 
 // @TODO improve styles

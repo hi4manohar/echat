@@ -4,7 +4,7 @@
     @click="setActive"
   )
     .profile-name {{ getProfile(conversation.profileId).pName }}
-    .msg-preview {{ conversation.lastMsg.msgBody }}
+    .msg-preview.ellipsis {{ conversation.lastMsg.msgBody }}
 </template>
 
 <script>
@@ -32,4 +32,14 @@ export default {
 .conversation-preview
   margin-left 1em
   background rgba(black, .1)
+  max-width: 80%;
+  margin-left: 4em;
+  margin-bottom: 7px;
+  cursor: pointer;
+.msg-preview
+  font-size 12px
+.ellipsis
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 </style>

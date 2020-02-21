@@ -6,7 +6,10 @@
     )
       // @TODO fetch once and get the user's detail here,
       // replacing the id
-      .name {{ getUser(conversationsBlock[0].userId).pName }}
+      .agent-profile
+        .agent-image
+          img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
+        .name {{ getUser(conversationsBlock[0].userId).pName }}
       // List all user's conversations, click to activate and open in pane
       ConversationPreview(
         v-for="conversation in conversationsBlock"
@@ -42,9 +45,27 @@ export default {
 
 <style lang="stylus" scoped>
 .conversations-list
-  height calc(100vh - 112px)
+  height calc(100vh - 88px)
   overflow-y auto
+.name
+  margin-left: 11px;
 
 .conversations-block
   margin 0 0 1em
+.agent-image
+  height 49px
+  width 49px
+.agent-profile
+  flex none
+  display flex
+  align-items center
+.img-round
+  display block
+  position relative
+  transition opacity .15s ease-out
+  width 100%
+  height 100%
+  z-index 100
+  overflow hidden
+  border-radius 50%
 </style>

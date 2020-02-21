@@ -19,15 +19,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-
-  {
-    path: '/conversation',
-    name: 'Conversation',
-    component: () => import('../views/Conversation.vue'),
-    meta: {
-      requiresAuth: false,
-    },
-  },
 ]
 
 const router = new VueRouter({
@@ -39,6 +30,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(dest => dest.meta.requiresAuth)
   const currentUser = fb.auth.currentUser
+
+  console.log('hi')
 
   if (requiresAuth && !currentUser) {
     next('/login')
