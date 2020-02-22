@@ -1,12 +1,11 @@
-<template lang="pug">    
-    .profile(v-if="!!data.pName")
-      .profile-img
-        img(:src="data.pAvatars[0]" v-if="type === 'user'")
-        img(:src="data.pAvatars[0] | dcryptPAvatar" v-if="type === 'agent'")
-      .profile-detail
-        .name {{ data.pName }}
-        .bio {{ data.pBio }}
-
+<template lang="pug">
+  .profile(v-if="!!data.pName")
+    .profile-img
+      img(:src="data.pAvatars[0]" v-if="type === 'user'")
+      img(:src="data.pAvatars[0] | dcryptPAvatar" v-if="type === 'agent'")
+    .profile-detail
+      .name {{ data.pName }}
+      .bio {{ data.pBio }}
 </template>
 
 <script>
