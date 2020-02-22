@@ -1,5 +1,5 @@
 <template lang="pug">
-  .conversation-container
+  .conversation-container(:class="conversationContainerClass")
     .chat-profile
       .agent-image
         img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
@@ -21,11 +21,12 @@
             div.msg-input
               <textarea class="msg-area" placeholder="Type Message Here.."></textarea>
               div.msg-sent-icon
-            div.attach-file
+            div.attach-file(@click="meta.isPhotopackSenderVisible = true")
               <i class="fas fa-paperclip"></i>
             div.attach-file
 
-
+      v-row(v-if="active.profileId")
+        PhotopackSender(v-show="meta.isPhotopackSenderVisible")
 </template>
 
 <script>
@@ -33,10 +34,18 @@ import { mapState } from 'vuex'
 import fb from '../db/firebase'
 import '../filters/moment'
 
+import PhotopackSender from '../components/conversation/PhotopackSender.vue'
+
 export default {
   name: 'Conversation',
+  components: {
+    PhotopackSender,
+  },
   data: () => ({
     messages: {},
+    meta: {
+      isPhotopackSenderVisible: false,
+    },
     textarea: {
       autoGrow: false,
       autofocus: true,
@@ -62,6 +71,13 @@ export default {
   }),
   computed: {
     ...mapState(['active']),
+    // @TODO note how I can set a class using vue, use this
+    // new class to modify styles and display photopack correctly
+    conversationContainerClass() {
+      return {
+        'conversation--photopack-visible': this.meta.isPhotopackSenderVisible,
+      }
+    },
     fbRef() {
       return k => `conversation/${k}/messages`
     },

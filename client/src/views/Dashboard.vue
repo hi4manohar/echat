@@ -28,12 +28,12 @@ export default {
     Profile,
   },
   methods: {
-    loadAllCurrent() {
-      this.$store.dispatch('fetchAllCurrent')
+    loadAll() {
+      this.$store.dispatch('fetchAll')
     },
   },
   created() {
-    this.loadAllCurrent()
+    this.loadAll()
   },
 }
 </script>
