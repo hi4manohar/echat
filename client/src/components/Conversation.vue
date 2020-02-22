@@ -8,11 +8,16 @@
         v-for="message in messages"
         :class="{ 'from-agent': message.fromAgent }"
       )
-        .message {{ message.msgBody }}<span class="timestamp">11:30 pm</span>
+        .message {{ message.msgBody }} 
+          .timestamp {{timeConversion(message.msgTime)}}
         
       //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
 
     .chat-footer
+      v-row
+        v-col(sm='6' cols='12')
+          v-textarea(v-model='model' :auto-grow='autoGrow' :clearable='clearable' :counter='counter ? counter : false' :filled='filled' :flat='flat' :hint='hint' :label='label' :loading='loading' :no-resize='noResize' :outlined='outlined' :persistent-hint='persistentHint' :placeholder='placeholder' :rounded='rounded' :row-height='rowHeight' :rows='rows' :shaped='shaped' :single-line='singleLine' :solo='solo')
+
 
 </template>
 
@@ -24,6 +29,28 @@ export default {
   name: 'Conversation',
   data: () => ({
     messages: {},
+    textarea: {
+      autoGrow: false,
+      autofocus: true,
+      clearable: false,
+      counter: 0,
+      filled: false,
+      flat: false,
+      hint: '',
+      label: '',
+      loading: false,
+      model: "I'm a textarea.",
+      noResize: true,
+      outlined: true,
+      persistentHint: false,
+      placeholder: '',
+      rounded: true,
+      rowHeight: 24,
+      rows: 1,
+      shaped: false,
+      singleLine: false,
+      solo: false,
+    },
   }),
   computed: {
     ...mapState(['active']),
@@ -63,6 +90,17 @@ export default {
       // @TODO test and fix
       const container = this.$refs.conversation
       container.scrollTop = container.scrollHeight
+    },
+    timeConversion(timestamp) {
+      let d = new Date(timestamp)
+      let hours = d.getHours()
+      let minutes = d.getMinutes()
+      let ampm = hours >= 12 ? 'pm' : 'am'
+      hours = hours % 12
+      hours = hours ? hours : 12 // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0' + minutes : minutes
+      let strTime = hours + ':' + minutes + ' ' + ampm
+      return strTime
     },
   },
 }

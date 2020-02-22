@@ -50,11 +50,8 @@ export default {
 
 .profiles-container
   height:100vh
-  display flex
-  flex-direction column
   max-width 100%
   max-height 100%
-  justify-content space-between
   overflow-y: auto;
 .conv-section
   background: #121212;

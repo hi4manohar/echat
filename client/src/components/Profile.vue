@@ -1,19 +1,16 @@
-<template lang="pug">
-  div
+<template lang="pug">    
     .profile(v-if="!!data.pName")
       // @TODO display all of user's info like pictures, location, etc
-      div.pimg(v-if="type === 'user'")
+      div.user-profile-img(v-if="type === 'user'")
         img(:src="data.pAvatars[0]")
-      div.pdetail(v-if="type === 'user'")
+      div.user-profile-detail(v-if="type === 'user'")
         .name {{ data.pName }}
         .bio {{ data.pBio }}
-      
-      div(v-if="type === 'agent'")
+      div.agent-profile-img(v-if="type === 'agent'")
         img(:src="data.pAvatars[0] | dcryptPAvatar")
+      div.agent-profile-detail(v-if="type === 'agent'")
         .name {{ data.pName }}
         .bio {{ data.pBio }}
-
-    div.pdetrow()
 
 </template>
 
@@ -72,7 +69,7 @@ export default {
         profileRef[subType]('value', profileSnapshot => {
           const profile = profileSnapshot.val()
           this.data = profile
-          console.log(this.data)
+          console.log('data---->', this.data)
         })
       }
       // only load once for agent's profile, it never changes
@@ -92,31 +89,25 @@ export default {
 
 
 .profile
-  padding:20px
+  padding:20px 20px 0px 20px
 
-.pimg
+.user-profile-img, .agent-profile-img
   width:200px;
   height:200px;
   border-radius:50%;
   overflow:hidden;
   margin: 0 auto;
 
-.pimg img
+.user-profile-img img, .agent-profile-img img
   width:100%;
   height:100%
 
-.pdetail
+.user-profile-detail, .agent-profile-detail
   text-align:center
   padding:10px 0px
   margin-bottom:10px;
 
-.pdetrow{
-  height:100px;
-  background:#1e1e1e;
-  border-radius:10px;
-}
-
-img
-  max-width 15em
-  display block
+.bio
+  font-size: 12px;
+  color: #9e9e9e;
 </style>

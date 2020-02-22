@@ -8,7 +8,7 @@
       // replacing the id
       .agent-profile
         .agent-image
-          img(class="img-round" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTktrJrpzwPQ_a-rdg_ECfCFmIx5jKfbfU85eVgaDevH4T6fFR4")
+          img(class="img-round" :src="getUser(conversationsBlock[0].userId).pAvatars[0]")
         .name {{ getUser(conversationsBlock[0].userId).pName }}
       // List all user's conversations, click to activate and open in pane
       ConversationPreview(
