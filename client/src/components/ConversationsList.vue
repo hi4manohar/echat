@@ -4,13 +4,10 @@
       v-for="conversationsBlock in selectedConversations"
       :key="conversationsBlock[0].userId"
     )
-      // @TODO fetch once and get the user's detail here,
-      // replacing the id
       .agent-profile
         .agent-image
           img(class="img-round" :src="getUser(conversationsBlock[0].userId).pAvatars")
         .name {{ getUser(conversationsBlock[0].userId).pName }}
-      // List all user's conversations, click to activate and open in pane
       ConversationPreview(
         v-for="conversation in conversationsBlock"
         :conversation="conversation"
