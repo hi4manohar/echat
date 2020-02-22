@@ -12,7 +12,7 @@
       )
         .message {{ message.msgBody }}
           .timestamp {{ message.msgTime | timeFormat }}
-      //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
+      //- @TODO add full timestamp on hover (like messenger)
     .chat-footer
       v-row
         v-col(sm='12' cols='12')

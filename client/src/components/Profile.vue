@@ -2,7 +2,7 @@
   .profile(v-if="!!data.pName")
     .profile-img
       img(:src="data.pAvatars[0]" v-if="type === 'user'")
-      img(:src="data.pAvatars[0] | dcryptPAvatar" v-if="type === 'agent'")
+      img(:src="data.pAvatars[0] | decryptPImage" v-if="type === 'agent'")
     .profile-detail
       .name {{ data.pName }}
       .bio {{ data.pBio }}
@@ -22,7 +22,7 @@ export default {
   props: ['type'],
   mixins: [fbHelper],
   filters: {
-    dcryptPAvatar: dcrypt.pAvatar,
+    decryptPImage: dcrypt.pImg,
   },
   computed: {
     ...mapState(['active']),
