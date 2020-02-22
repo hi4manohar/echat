@@ -1,14 +1,9 @@
 <template lang="pug">    
     .profile(v-if="!!data.pName")
-      // @TODO display all of user's info like pictures, location, etc
-      div.user-profile-img(v-if="type === 'user'")
-        img(:src="data.pAvatars[0]")
-      div.user-profile-detail(v-if="type === 'user'")
-        .name {{ data.pName }}
-        .bio {{ data.pBio }}
-      div.agent-profile-img(v-if="type === 'agent'")
-        img(:src="data.pAvatars[0] | dcryptPAvatar")
-      div.agent-profile-detail(v-if="type === 'agent'")
+      .profile-img
+        img(:src="data.pAvatars[0]" v-if="type === 'user'")
+        img(:src="data.pAvatars[0] | dcryptPAvatar" v-if="type === 'agent'")
+      .profile-detail
         .name {{ data.pName }}
         .bio {{ data.pBio }}
 
@@ -84,29 +79,25 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
-
-
 .profile
-  padding:20px 20px 0px 20px
+  padding 20px 20px 0px 20px
 
-.user-profile-img, .agent-profile-img
-  width:200px;
-  height:200px;
-  border-radius:50%;
-  overflow:hidden;
-  margin: 0 auto;
+.profile-img
+  width 200px
+  height 200px
+  border-radius 50%
+  overflow hidden
+  margin 0 auto
+  img
+    width 100%
+    height 100%
 
-.user-profile-img img, .agent-profile-img img
-  width:100%;
-  height:100%
-
-.user-profile-detail, .agent-profile-detail
-  text-align:center
-  padding:10px 0px
-  margin-bottom:10px;
+.profile-detail
+  text-align center
+  padding 10px 0px
+  margin-bottom 10px
 
 .bio
-  font-size: 12px;
-  color: #9e9e9e;
+  font-size 12px
+  color #9e9e9e
 </style>
