@@ -69,7 +69,6 @@ export default {
         profileRef[subType]('value', profileSnapshot => {
           const profile = profileSnapshot.val()
           this.data = profile
-          console.log('data---->', this.data)
         })
       }
       // only load once for agent's profile, it never changes

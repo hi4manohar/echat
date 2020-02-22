@@ -11,7 +11,7 @@
         :class="{ 'from-agent': message.fromAgent }"
       )
         .message {{ message.msgBody }} 
-          .timestamp {{timeConversion(message.msgTime)}}
+          .timestamp {{ message.msgTime | timeFormat }}
         
       //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
 
@@ -24,7 +24,6 @@
               <textarea class="msg-area" placeholder="Type Message Here.."></textarea>
               div.msg-sent-icon
             div.attach-file
-              Icon(path={mdiAccount}) User Profile
               <i class="fas fa-paperclip"></i>
             div.attach-file
 
@@ -34,7 +33,7 @@
 <script>
 import { mapState } from 'vuex'
 import fb from '../db/firebase'
-
+import '../filters/moment'
 
 export default {
   name: 'Conversation',
@@ -101,17 +100,6 @@ export default {
       // @TODO test and fix
       const container = this.$refs.conversation
       container.scrollTop = container.scrollHeight
-    },
-    timeConversion(timestamp) {
-      let d = new Date(timestamp)
-      let hours = d.getHours()
-      let minutes = d.getMinutes()
-      let ampm = hours >= 12 ? 'pm' : 'am'
-      hours = hours % 12
-      hours = hours ? hours : 12 // the hour '0' should be '12'
-      minutes = minutes < 10 ? '0' + minutes : minutes
-      let strTime = hours + ':' + minutes + ' ' + ampm
-      return strTime
     },
   },
 }
@@ -226,6 +214,4 @@ export default {
   display: block;
   text-align: right;
   color: #9e9e9e;
-
-  
 </style>

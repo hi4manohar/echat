@@ -17,7 +17,6 @@ export default {
     ...mapState(['linkedProfiles']),
 
     getProfile() {
-      console.log('linkedProfiles', this.linkedProfiles)
       return profileId => this.linkedProfiles[profileId] || {}
     },
   },
