@@ -15,17 +15,7 @@
         
       //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
 
-    .chat-footer
-      v-row
-        v-col(sm='12' cols='12')
-          <!-- v-textarea.msg-area(v-model='model' :auto-grow='autoGrow' :clearable='clearable' :counter='counter ? counter : false' :filled='filled' :flat='flat' :hint='hint' :label='label' :loading='loading' :no-resize='noResize' :outlined='outlined' :persistent-hint='persistentHint' :placeholder='placeholder' :rounded='rounded' :row-height='rowHeight' :rows='rows' :shaped='shaped' :single-line='singleLine' :solo='solo') -->
-          div.msg-type-area
-            div.msg-input
-              <textarea class="msg-area" placeholder="Type Message Here.."></textarea>
-              div.msg-sent-icon
-            div.attach-file
-              <i class="fas fa-paperclip"></i>
-            div.attach-file
+    ChatInteract()
 
 
 </template>
@@ -34,9 +24,13 @@
 import { mapState } from 'vuex'
 import fb from '../db/firebase'
 import '../filters/moment'
+import ChatInteract from '../components/ChatInteract'
 
 export default {
   name: 'Conversation',
+  components: {
+    ChatInteract,
+  },
   data: () => ({
     messages: {},
     textarea: {
@@ -100,7 +94,7 @@ export default {
       // @TODO test and fix
       const container = this.$refs.conversation
       container.scrollTop = container.scrollHeight
-    },
+    }
   },
 }
 </script>
@@ -124,13 +118,6 @@ export default {
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.87);
     padding: 20px;
-.chat-footer
-  height:100px
-  background:#1e1e1e
-  padding: 7px 20px;
-
-.msg-type-area
-  display:flex
 
 .conversations-list
   height calc(100vh - 88px)
@@ -174,22 +161,6 @@ export default {
   padding: 15px 47px 15px 20px;
   font-size: 14px;
 
-.msg-sent-icon
-  position:absolute;
-  width:40px;
-  height:40px;
-  background:#999
-  border-radius:50%
-  right:5px;
-  top:5px;
-
-.attach-file
-  width:50px;
-  height:50px;
-  background:#eee
-  margin-left:2px;
-  border-radius:50%
-
 // @TODO improve styles
 .message-row
   display flex
@@ -214,4 +185,6 @@ export default {
   display: block;
   text-align: right;
   color: #9e9e9e;
+
+  
 </style>

@@ -26,6 +26,7 @@ export default {
     ConversationsList,
     Conversation,
     Profile,
+    CharacterData
   },
   methods: {
     loadAllCurrent() {
