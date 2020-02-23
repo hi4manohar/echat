@@ -12,6 +12,7 @@ export default new Vuex.Store({
     conversations: [[{}]],
     linkedUsers: {},
     linkedProfiles: {},
+    photopack: [],
   },
   mutations: {
     SET_CURRENT_USER(state, val) {
@@ -29,6 +30,12 @@ export default new Vuex.Store({
     SET_LINKED_PROFILES(state, val) {
       state.linkedProfiles = val
     },
+    SET_PHOTOPACK(state, val) {
+      state.photopack = val
+    },
+  },
+  getters: {
+    profileFromId: state => id => state.linkedProfiles[id],
   },
   actions: {
     /**
@@ -101,7 +108,7 @@ export default new Vuex.Store({
         // then, group by users
         const groupedCurrentConversations = currentConversations.reduce(
           (grouped, x) => {
-            ; (grouped[x.userId] = grouped[x.userId] || []).push(x)
+            ;(grouped[x.userId] = grouped[x.userId] || []).push(x)
             return grouped
           },
           {}
@@ -121,17 +128,29 @@ export default new Vuex.Store({
       }
     },
 
+    async fetchPhotopack({ commit }) {
+      const photopackRef = fb.db.ref('global_photopack')
+      photopackRef.once('value', photopackSnapshot => {
+        const photopackData = photopackSnapshot.val()
+        const photopack = Object.values(photopackData).map(p => p.i)
+        commit('SET_PHOTOPACK', photopack)
+      })
+    },
+
     /**
      * Fetch all initial details for initialization
      * and set loops for them to run throttled as needed
      */
-    async fetchAllCurrent({ dispatch }) {
-      dispatch('fetchUser')
-      dispatch('fetchCurrentConversations')
-      // update conversations every 5 minutes
-      setTimeout(() => {
-        dispatch('fetchAllCurrent')
-      }, 1 * 60 * 1000)
+    async fetchAll({ dispatch }) {
+      // fetch static data once
+      dispatch('fetchPhotopack')
+      // update current data every 5 minutes
+      const _fetchAllCurrent = () => {
+        dispatch('fetchUser')
+        dispatch('fetchCurrentConversations')
+      }
+      setTimeout(() => _fetchAllCurrent, 1 * 60 * 1000)
+      _fetchAllCurrent()
     },
 
     /**

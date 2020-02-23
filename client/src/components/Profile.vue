@@ -1,16 +1,17 @@
 <template lang="pug">    
     .profile(v-if="!!data.pName")
-      // @TODO display all of user's info like pictures, location, etc
-      div.user-profile-img(v-if="type === 'user'")
-        img(:src="data.pAvatars[0]")
-      div.user-profile-detail(v-if="type === 'user'")
-        .name {{ data.pName }}
-        .bio {{ data.pBio }}
-      div.agent-profile-img(v-if="type === 'agent'")
-        img(:src="data.pAvatars[0] | dcryptPAvatar")
-      div.agent-profile-detail(v-if="type === 'agent'")
-        .name {{ data.pName }}
-        .bio {{ data.pBio }}
+      .user-block(v-if="type === 'user'")
+        .user-profile-img
+          img(:src="data.pAvatars[0]")
+        .user-profile-detail
+          .name {{ data.pName }}
+          .bio {{ data.pBio }}
+      .agent-block(v-if="type === 'agent'")
+        .agent-profile-img
+          img(:src="data.pAvatars[0] | decryptPImage")
+        .agent-profile-detail
+          .name {{ data.pName }}
+          .bio {{ data.pBio }}
 
 </template>
 
@@ -28,7 +29,7 @@ export default {
   props: ["type"],
   mixins: [fbHelper],
   filters: {
-    dcryptPAvatar: dcrypt.pAvatar
+    decryptPImage: dcrypt.pImg
   },
   computed: {
     ...mapState(["active"]),

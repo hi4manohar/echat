@@ -1,5 +1,5 @@
 <template lang="pug">
-  .conversation-container
+  .conversation-container(:class="conversationContainerClass")
     .chat-profile
       .agent-image
         img(class="img-round" :src="userProfile.pAvatars[0]" v-if="!!userProfile.pAvatars")
@@ -12,9 +12,10 @@
       )
         .message {{ message.msgBody }} 
           .timestamp {{ message.msgTime | timeFormat }}
-        
-      //- @TODO add small timestamp next to message and full timestamp on hover (like messenger)
+    //- @TODO add full timestamp on hover (like messenger)
     ChatInteract
+    v-row(v-if="active.profileId")
+      PhotopackSender(v-show="meta.isPhotopackSenderVisible")
 </template>
 
 <script>
@@ -23,21 +24,33 @@ import fb from "../db/firebase";
 import "../filters/moment";
 import dcrypt from "../filters/dcrypt";
 import ChatInteract from "../components/ChatInteract";
+import PhotopackSender from '../components/conversation/PhotopackSender.vue'
 
 export default {
   name: "Conversation",
   components: {
-    ChatInteract
+    ChatInteract,
+    PhotopackSender
   },
   filters: {
-    dcryptPAvatar: dcrypt.pAvatar
+    decryptPImage: dcrypt.pImg
   },
   data: () => ({
     messages: {},
-    userProfile: {}
+    userProfile: {},
+    meta: {
+      isPhotopackSenderVisible: true,
+    }
   }),
   computed: {
     ...mapState(["active", "linkedProfiles", "linkedUsers"]),
+    // @TODO note how I can set a class using vue, use this
+    // new class to modify styles and display photopack correctly
+    conversationContainerClass() {
+      return {
+        'conversation--photopack-visible': this.meta.isPhotopackSenderVisible,
+      }
+    },
     fbRef() {
       return k => `conversation/${k}/messages`;
     },
