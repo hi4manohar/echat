@@ -101,7 +101,7 @@ export default new Vuex.Store({
         // then, group by users
         const groupedCurrentConversations = currentConversations.reduce(
           (grouped, x) => {
-            ;(grouped[x.userId] = grouped[x.userId] || []).push(x)
+            ; (grouped[x.userId] = grouped[x.userId] || []).push(x)
             return grouped
           },
           {}

@@ -15,98 +15,95 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { fbHelper } from '../mixins/fb-helper'
-import dcrypt from '../filters/dcrypt'
-import fb from '../db/firebase'
+import { mapState } from "vuex";
+import { fbHelper } from "../mixins/fb-helper";
+import dcrypt from "../filters/dcrypt";
+import fb from "../db/firebase";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   data: () => ({
-    data: {},
+    data: {}
   }),
-  props: ['type'],
+  props: ["type"],
   mixins: [fbHelper],
   filters: {
-    dcryptPAvatar: dcrypt.pAvatar,
+    dcryptPAvatar: dcrypt.pAvatar
   },
   computed: {
-    ...mapState(['active']),
+    ...mapState(["active"]),
     typeRef() {
       return {
         agent: `agent_profile`,
-        user: `profile`,
-      }[this.type]
+        user: `profile`
+      }[this.type];
     },
     typeKey() {
       return {
         agent: `profileId`,
-        user: `userId`,
-      }[this.type]
+        user: `userId`
+      }[this.type];
     },
     fbRef() {
-      return k => `${this.typeRef}/${k}`
-    },
+      return k => `${this.typeRef}/${k}`;
+    }
   },
   watch: {
     active: function(n, old) {
-      const key = this.typeKey
+      const key = this.typeKey;
       if (!!n[key] && n[key] !== old[key]) {
-        this.deleteListener(old[key])
-        this.loadProfile()
+        this.deleteListener(old[key]);
+        this.loadProfile();
       }
-    },
+    }
   },
   methods: {
     /**
      * Subscribe to profile info
      */
     loadProfile() {
-      if (!this.active[this.typeKey]) return false
-      const profileRef = fb.db.ref(this.fbRef(this.active[this.typeKey]))
+      if (!this.active[this.typeKey]) return false;
+      const profileRef = fb.db.ref(this.fbRef(this.active[this.typeKey]));
       // helper to load profile
       const _loadProfile = subType => {
-        profileRef[subType]('value', profileSnapshot => {
-          const profile = profileSnapshot.val()
-          this.data = profile
-        })
-      }
+        profileRef[subType]("value", profileSnapshot => {
+          const profile = profileSnapshot.val();
+          this.data = profile;
+        });
+      };
       // only load once for agent's profile, it never changes
-      _loadProfile(this.type === 'agent' ? 'once' : 'on')
+      _loadProfile(this.type === "agent" ? "once" : "on");
     },
 
     /** Delete any old listener */
     deleteListener(oldId) {
-      this.fbDeleteListener(this.fbRef(oldId))
-    },
-  },
-}
+      this.fbDeleteListener(this.fbRef(oldId));
+    }
+  }
+};
 </script>
 
 <style lang="stylus" scoped>
-
-
-
 .profile
-  padding:20px 20px 0px 20px
+  padding 20px 20px 0px 20px
 
 .user-profile-img, .agent-profile-img
-  width:200px;
-  height:200px;
-  border-radius:50%;
-  overflow:hidden;
-  margin: 0 auto;
+  width 200px
+  height 200px
+  border-radius 50%
+  overflow hidden
+  margin 0 auto
 
 .user-profile-img img, .agent-profile-img img
-  width:100%;
-  height:100%
+  width 100%
+  height 100%
 
 .user-profile-detail, .agent-profile-detail
-  text-align:center
-  padding:10px 0px
-  margin-bottom:10px;
+  text-align center
+  padding 10px 0px
+  margin-bottom 10px
 
 .bio
-  font-size: 12px;
-  color: #9e9e9e;
+  font-size 12px
+  color #9e9e9e
 </style>
