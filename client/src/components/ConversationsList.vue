@@ -1,5 +1,8 @@
 <template lang="pug">
   .conversations-list
+    .serch-list
+      v-text-field(label='Search List', rounded='', solo='')
+    .chat-list
       v-expansion-panels
         v-expansion-panel.mb-1.menu(
           v-for="conversationsBlock in selectedConversations" :key="conversationsBlock[0].userId"
@@ -45,7 +48,14 @@ export default {
 
 <style lang="stylus" scoped>
 .conversations-list
-  height calc(100vh - 88px)
+  height 100vh
+
+.serch-list
+  height 60px
+  padding 5px 0px
+
+.chat-list
+  height calc(100vh - 60px)
   overflow-y auto
 
 .name
