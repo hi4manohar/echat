@@ -10,29 +10,41 @@
             span.headline.title Photopack Images
           .btn-con
             v-btn(
-              :color='colorLocal'
+              :color='defaultActive === "local" ? "primary" : "black"'
               @click="changeDefaultActive('local')"
             ) Local
             v-spacer
             v-btn(
-              :color='colorGlobal'
+              :color='defaultActive === "global" ? "primary" : "black"'
               @click="changeDefaultActive('global')"
             ) Global
           v-col(cols='12', sm='12')
             v-card
               v-container(fluid='')
                 v-row(v-show="defaultActive === 'local' ? true : false")
-                  v-col.d-flex.child-flex(v-for="globalphoto in profilePhotopack", :key='globalphoto', cols='3')
+                  v-col.d-flex.child-flex(
+                    v-for="(photo, index) in profilePhotopack",
+                    :key='`photo${index}`', cols='3',
+                    :class="{highlight:`photo${index}` == selected}" @click="selected = `photo${index}`"
+                  )
                     v-card.d-flex(flat='', tile='')
                       v-img.grey.lighten-2(
-                        :src='globalphoto | decryptPImage',
-                        :lazy-src='globalphoto | decryptPImage', aspect-ratio='1'
+                        :src='photo | decryptPImage',
+                        :lazy-src='photo | decryptPImage', aspect-ratio='1'
                       )
                         template(v-slot:placeholder='')
                           v-row.fill-height.ma-0(align='center', justify='center')
-                            v-progress-circular(indeterminate='', color='grey lighten-5')
+                            v-progress-circular(
+                              indeterminate='',
+                              color='grey lighten-5'
+                            )
                 v-row(v-show="defaultActive === 'global' ? true : false")
-                  v-col.d-flex.child-flex(v-for="photo in globalPhotopack", :key='photo', cols='3')
+                  v-col.d-flex.child-flex(
+                    v-for="(photo, index) in globalPhotopack",
+                    :key='`photo${index}`',
+                    cols='3',
+                    :class="{highlight:`photo${index}` == selected}" @click="selected = `photo${index}`"
+                  )
                     v-card.d-flex(flat='', tile='')
                       v-img.grey.lighten-2(
                         :src='photo | decryptPhotopackImage',
@@ -40,7 +52,10 @@
                         aspect-ratio='1'
                       )
                         template(v-slot:placeholder='')
-                          v-row.fill-height.ma-0(align='center', justify='center')
+                          v-row.fill-height.ma-0(
+                            align='center',
+                            justify='center'
+                          )
                             v-progress-circular(indeterminate='', color='grey lighten-5')
           v-card-actions
             v-spacer
@@ -56,8 +71,7 @@ export default {
   data: () => ({
     dialog: true,
     defaultActive: 'local',
-    colorLocal: 'primary',
-    colorGlobal: 'black'
+    selected: undefined
   }),
   computed: {
     ...mapState(['active', 'photopack', 'isPhotopackSenderVisible']),
@@ -81,11 +95,8 @@ export default {
       return this.$store.dispatch('setIsPhotopackSenderVisible', false)
     },
     changeDefaultActive(type) {
-      if(type === 'local' || type === 'global') {
-        this.colorLocal = type == 'local' ? 'primary' : 'black'
-        this.colorGlobal = type == 'global' ? 'primary' : 'black'
+      if(type === 'local' || type === 'global')
         return this.defaultActive = type
-      }        
     }
   }
 }
@@ -101,4 +112,7 @@ export default {
   margin 0 auto
 .local
   color black
+.highlight
+  border 2px solid green
+  background black
 </style>
