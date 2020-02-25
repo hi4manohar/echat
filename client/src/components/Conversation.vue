@@ -10,9 +10,11 @@
 				v-for="message in messages"
 				:class="{ 'from-agent': message.fromAgent }"
 			)
-				.message {{ message.msgBody }} 
-					.timestamp {{ message.msgTime | timeFormat }}
-		//- @TODO add full timestamp on hover (like messenger)
+				v-tooltip(right)
+					template(v-slot:activator="{ on }")
+						.message(v-on="on") {{ message.msgBody }} 
+							.timestamp {{ message.msgTime | timeFormat }}
+					span {{ message.msgTime | fulltimeFormat }}
 		v-row(v-if="active.profileId")
 			PhotopackSender
 		ChatInteract(
