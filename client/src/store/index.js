@@ -13,7 +13,7 @@ export default new Vuex.Store({
     linkedUsers: {},
     linkedProfiles: {},
     photopack: [],
-    isPhotopackSenderVisible: false
+    isPhotopackSenderVisible: false,
   },
   mutations: {
     SET_CURRENT_USER(state, val) {
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     },
     SET_ISPHOTOPACKSENDERVISIBLE(state, val) {
       state.isPhotopackSenderVisible = val
-    }
+    },
   },
   getters: {
     profileFromId: state => id => state.linkedProfiles[id],
@@ -165,9 +165,9 @@ export default new Vuex.Store({
     },
 
     //set isPhotopackSenderVisible Status
-    async setIsPhotopackSenderVisible({commit}, status) {
+    async setIsPhotopackSenderVisible({ commit }, status) {
       commit('SET_ISPHOTOPACKSENDERVISIBLE', status)
-    }
+    },
   },
   modules: {},
 })

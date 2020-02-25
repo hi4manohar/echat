@@ -15,28 +15,28 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import dcrypt from "../../filters/dcrypt";
+import { mapState } from 'vuex'
+import dcrypt from '../../filters/dcrypt'
 export default {
-  name: "ConversationPreview",
-  props: ["conversation"],
+  name: 'ConversationPreview',
+  props: ['conversation'],
   filters: {
-    dcryptPAvatar: dcrypt.pAvatar
+    dcryptPAvatar: dcrypt.pAvatar,
   },
   data: () => ({}),
   computed: {
-    ...mapState(["linkedProfiles"]),
+    ...mapState(['linkedProfiles']),
 
     getProfile() {
-      return profileId => this.linkedProfiles[profileId] || {};
-    }
+      return profileId => this.linkedProfiles[profileId] || {}
+    },
   },
   methods: {
     setActive() {
-      this.$store.dispatch("setActive", this.conversation);
-    }
-  }
-};
+      this.$store.dispatch('setActive', this.conversation)
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>

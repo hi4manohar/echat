@@ -21,83 +21,88 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import fb from "../db/firebase";
-import "../filters/moment";
-import dcrypt from "../filters/dcrypt";
-import ChatInteract from "../components/ChatInteract";
+import { mapState } from 'vuex'
+import fb from '../db/firebase'
+import '../filters/moment'
+import dcrypt from '../filters/dcrypt'
+import ChatInteract from '../components/ChatInteract'
 import PhotopackSender from '../components/conversation/PhotopackSender.vue'
 
 export default {
-	name: "Conversation",
-	components: {
-		ChatInteract,
-		PhotopackSender
-	},
-	filters: {
-		decryptPImage: dcrypt.pImg
-	},
-	data: () => ({
-		messages: {},
-		userProfile: {}
-	}),
-	computed: {
-		...mapState(["active", "linkedProfiles", "linkedUsers", 'isPhotopackSenderVisible']),
-		// @TODO note how I can set a class using vue, use this
-		// new class to modify styles and display photopack correctly
-		conversationContainerClass() {
-			return {
-				'conversation--photopack-visible': this.isPhotopackSenderVisible,
-			}
-		},
-		fbRef() {
-			return k => `conversation/${k}/messages`;
-		},
-		getProfile() {
-			return userId => this.linkedUsers[userId] || {};
-		}
-	},
-	watch: {
-		active: function(n, old) {
-			if (!!n.cvsId && n.cvsId !== old.cvsId) {
-				this.deleteListener(old.cvsId);
-				this.loadConversation();
-				this.loadUserProfile();
-			}
-		}
-	},
-	methods: {
-		loadUserProfile() {
-			if (!this.active["userId"]) return false;
-			this.userProfile = this.getProfile(this.active["userId"]);
-		},
+  name: 'Conversation',
+  components: {
+    ChatInteract,
+    PhotopackSender,
+  },
+  filters: {
+    decryptPImage: dcrypt.pImg,
+  },
+  data: () => ({
+    messages: {},
+    userProfile: {},
+  }),
+  computed: {
+    ...mapState([
+      'active',
+      'linkedProfiles',
+      'linkedUsers',
+      'isPhotopackSenderVisible',
+    ]),
+    // @TODO note how I can set a class using vue, use this
+    // new class to modify styles and display photopack correctly
+    conversationContainerClass() {
+      return {
+        'conversation--photopack-visible': this.isPhotopackSenderVisible,
+      }
+    },
+    fbRef() {
+      return k => `conversation/${k}/messages`
+    },
+    getProfile() {
+      return userId => this.linkedUsers[userId] || {}
+    },
+  },
+  watch: {
+    active: function(n, old) {
+      if (!!n.cvsId && n.cvsId !== old.cvsId) {
+        this.deleteListener(old.cvsId)
+        this.loadConversation()
+        this.loadUserProfile()
+      }
+    },
+  },
+  methods: {
+    loadUserProfile() {
+      if (!this.active['userId']) return false
+      this.userProfile = this.getProfile(this.active['userId'])
+    },
 
-		/** Subscribe to latest conversation */
-		loadConversation() {
-			if (!this.active.cvsId) return false;
-			const messagesRef = fb.db.ref(this.fbRef(this.active.cvsId));
-			messagesRef.on("value", cvsSnapshot => {
-				const cvs = cvsSnapshot.val();
-				this.messages = cvs;
-				this.updateScroll();
-			});
-			// @TODO mark isRead true as this is considered viewed
-		},
+    /** Subscribe to latest conversation */
+    loadConversation() {
+      if (!this.active.cvsId) return false
+      const messagesRef = fb.db.ref(this.fbRef(this.active.cvsId))
+      messagesRef.on('value', cvsSnapshot => {
+        const cvs = cvsSnapshot.val()
+        this.messages = cvs
+        this.updateScroll()
+      })
+      // @TODO mark isRead true as this is considered viewed
+    },
 
-		/** Delete any old listener */
-		deleteListener(oldCvsId) {
-			const messagesRef = fb.db.ref(this.fbRef(oldCvsId));
-			messagesRef.off("value");
-		},
+    /** Delete any old listener */
+    deleteListener(oldCvsId) {
+      const messagesRef = fb.db.ref(this.fbRef(oldCvsId))
+      messagesRef.off('value')
+    },
 
-		/** Scroll to bottom of messages pane */
-		updateScroll() {
-			// @TODO test and fix
-			const container = this.$refs.conversation;
-			container.scrollTop = container.scrollHeight;
-		}
-	}
-};
+    /** Scroll to bottom of messages pane */
+    updateScroll() {
+      // @TODO test and fix
+      const container = this.$refs.conversation
+      container.scrollTop = container.scrollHeight
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -165,7 +170,7 @@ export default {
 	padding 15px 47px 15px 20px
 	font-size 14px
 
-// @TODO improve styles 
+// @TODO improve styles
 .message-row
 	display flex
 
@@ -174,7 +179,7 @@ export default {
 
 &.from-agent
 	justify-content flex-end
-	
+
 .message
 	background rgba(255, 255, 255, 0.1)
 	border-radius 10px

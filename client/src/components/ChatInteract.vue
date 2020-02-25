@@ -14,23 +14,24 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-	name: "ChatInteract",
-	data: () => ({
-	}),
-	props: ["displayPhotoPack"],
-	computed: {
-		...mapState(['isPhotopackSenderVisible']),
-	},
-	methods: {
-		setPhotoPackView(val) {
-			console.log(val);
-			return (val === true || false) ? this.$store.dispatch('setIsPhotopackSenderVisible', val) : false
-		}
-	}
-};
+  name: 'ChatInteract',
+  data: () => ({}),
+  props: ['displayPhotoPack'],
+  computed: {
+    ...mapState(['isPhotopackSenderVisible']),
+  },
+  methods: {
+    setPhotoPackView(val) {
+      console.log(val)
+      return val === true || false
+        ? this.$store.dispatch('setIsPhotopackSenderVisible', val)
+        : false
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>

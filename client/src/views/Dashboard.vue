@@ -13,28 +13,28 @@
 </template>
 
 <script>
-import ConversationsList from "../components/ConversationsList";
-import Conversation from "../components/Conversation";
-import Profile from "../components/Profile";
+import ConversationsList from '../components/ConversationsList'
+import Conversation from '../components/Conversation'
+import Profile from '../components/Profile'
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data: () => ({}),
   components: {
     ConversationsList,
     Conversation,
     Profile,
-    CharacterData
+    CharacterData,
   },
   methods: {
     loadAll() {
-      this.$store.dispatch("fetchAll");
-    }
+      this.$store.dispatch('fetchAll')
+    },
   },
   created() {
-    this.loadAll();
-  }
-};
+    this.loadAll()
+  },
+}
 </script>
 
 <style lang="stylus" scoped>

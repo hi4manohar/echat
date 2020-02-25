@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import fb from "../db/firebase.js";
+import fb from '../db/firebase.js'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
     user: {
       email: ``,
-      password: ``
-    }
+      password: ``,
+    },
   }),
   methods: {
     async submitLogin() {
@@ -41,13 +41,13 @@ export default {
       const user = await fb.auth.signInWithEmailAndPassword(
         this.user.email,
         this.user.password
-      );
-      this.$store.commit("SET_CURRENT_USER", user.user);
-      this.$router.push("/dashboard");
-      return true;
-    }
-  }
-};
+      )
+      this.$store.commit('SET_CURRENT_USER', user.user)
+      this.$router.push('/dashboard')
+      return true
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>

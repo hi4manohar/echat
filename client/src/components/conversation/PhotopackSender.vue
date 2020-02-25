@@ -71,7 +71,7 @@ export default {
   data: () => ({
     dialog: true,
     defaultActive: 'local',
-    selected: undefined
+    selected: undefined,
   }),
   computed: {
     ...mapState(['active', 'photopack', 'isPhotopackSenderVisible']),
@@ -95,10 +95,10 @@ export default {
       return this.$store.dispatch('setIsPhotopackSenderVisible', false)
     },
     changeDefaultActive(type) {
-      if(type === 'local' || type === 'global')
-        return this.defaultActive = type
-    }
-  }
+      if (type === 'local' || type === 'global')
+        return (this.defaultActive = type)
+    },
+  },
 }
 </script>
 

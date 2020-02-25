@@ -16,72 +16,72 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fbHelper } from "../mixins/fb-helper";
-import dcrypt from "../filters/dcrypt";
-import fb from "../db/firebase";
+import { mapState } from 'vuex'
+import { fbHelper } from '../mixins/fb-helper'
+import dcrypt from '../filters/dcrypt'
+import fb from '../db/firebase'
 
 export default {
-  name: "Profile",
+  name: 'Profile',
   data: () => ({
-    data: {}
+    data: {},
   }),
-  props: ["type"],
+  props: ['type'],
   mixins: [fbHelper],
   filters: {
-    decryptPImage: dcrypt.pImg
+    decryptPImage: dcrypt.pImg,
   },
   computed: {
-    ...mapState(["active"]),
+    ...mapState(['active']),
     typeRef() {
       return {
         agent: `agent_profile`,
-        user: `profile`
-      }[this.type];
+        user: `profile`,
+      }[this.type]
     },
     typeKey() {
       return {
         agent: `profileId`,
-        user: `userId`
-      }[this.type];
+        user: `userId`,
+      }[this.type]
     },
     fbRef() {
-      return k => `${this.typeRef}/${k}`;
-    }
+      return k => `${this.typeRef}/${k}`
+    },
   },
   watch: {
     active: function(n, old) {
-      const key = this.typeKey;
+      const key = this.typeKey
       if (!!n[key] && n[key] !== old[key]) {
-        this.deleteListener(old[key]);
-        this.loadProfile();
+        this.deleteListener(old[key])
+        this.loadProfile()
       }
-    }
+    },
   },
   methods: {
     /**
      * Subscribe to profile info
      */
     loadProfile() {
-      if (!this.active[this.typeKey]) return false;
-      const profileRef = fb.db.ref(this.fbRef(this.active[this.typeKey]));
+      if (!this.active[this.typeKey]) return false
+      const profileRef = fb.db.ref(this.fbRef(this.active[this.typeKey]))
       // helper to load profile
       const _loadProfile = subType => {
-        profileRef[subType]("value", profileSnapshot => {
-          const profile = profileSnapshot.val();
-          this.data = profile;
-        });
-      };
+        profileRef[subType]('value', profileSnapshot => {
+          const profile = profileSnapshot.val()
+          this.data = profile
+        })
+      }
       // only load once for agent's profile, it never changes
-      _loadProfile(this.type === "agent" ? "once" : "on");
+      _loadProfile(this.type === 'agent' ? 'once' : 'on')
     },
 
     /** Delete any old listener */
     deleteListener(oldId) {
-      this.fbDeleteListener(this.fbRef(oldId));
-    }
-  }
-};
+      this.fbDeleteListener(this.fbRef(oldId))
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>

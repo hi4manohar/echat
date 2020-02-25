@@ -22,28 +22,28 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import ConversationPreview from "./dashboard/ConversationPreview";
+import { mapState } from 'vuex'
+import ConversationPreview from './dashboard/ConversationPreview'
 
 export default {
-  name: "ConversationsList",
+  name: 'ConversationsList',
   data: () => ({}),
   components: {
-    ConversationPreview
+    ConversationPreview,
   },
   computed: {
-    ...mapState(["conversations", "linkedUsers"]),
+    ...mapState(['conversations', 'linkedUsers']),
 
     // @TODO replace with pagination
     selectedConversations() {
-      return this.conversations.slice(0, 20);
+      return this.conversations.slice(0, 20)
     },
 
     getUser() {
-      return userId => this.linkedUsers[userId] || {};
-    }
-  }
-};
+      return userId => this.linkedUsers[userId] || {}
+    },
+  },
+}
 </script>
 
 <style lang="stylus" scoped>
