@@ -1,10 +1,7 @@
 <template lang="pug">
   .photopack
     v-row(justify='center')
-      v-dialog(
-        v-model='isPhotopackSenderVisible',
-        width='600px', @click:outside="e => photoPackHandler(e)"
-      )
+      v-dialog(v-model='photopackStatus.isPhotopackSenderVisible', width='600px' @click:outside="changePhotopackStatus(false)")
         v-card
           v-card-title.text-center.d-block
             span.headline.title Photopack Images
@@ -68,13 +65,18 @@ import dcrypt from '@/filters/dcrypt'
 
 export default {
   name: 'PhotopackSender',
+  props: {
+    photopackStatus: {
+      type: Object,
+    },
+  },
   data: () => ({
     dialog: true,
     defaultActive: 'local',
     selected: undefined,
   }),
   computed: {
-    ...mapState(['active', 'photopack', 'isPhotopackSenderVisible']),
+    ...mapState(['active', 'photopack']),
     ...mapGetters(['profileFromId']),
 
     profilePhotopack() {
@@ -82,7 +84,6 @@ export default {
     },
 
     globalPhotopack() {
-      console.log(this.photopack)
       return this.photopack
     },
   },
@@ -91,12 +92,12 @@ export default {
     decryptPhotopackImage: dcrypt.photopack,
   },
   methods: {
-    photoPackHandler() {
-      return this.$store.dispatch('setIsPhotopackSenderVisible', false)
-    },
     changeDefaultActive(type) {
       if (type === 'local' || type === 'global')
         return (this.defaultActive = type)
+    },
+    changePhotopackStatus(val) {
+      this.$emit('photopack_change_status', val)
     },
   },
 }

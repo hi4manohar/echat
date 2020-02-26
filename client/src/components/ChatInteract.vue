@@ -7,28 +7,20 @@
 						textarea(class="msg-area" placeholder="Type Message Here..")
 						v-btn.msg-sent-icon
 							v-icon(class="mdi-send mdi")
-					v-btn.attach-file(@click="(displayPhotoPack) ? setPhotoPackView(true) : false")
+					v-btn.attach-file(@click="setPhotoPackView(true)")
 						v-icon(class="mdi-attachment mdi")
 					v-btn.attach-file
 						v-icon(class="mdi mdi-image")
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'ChatInteract',
   data: () => ({}),
   props: ['displayPhotoPack'],
-  computed: {
-    ...mapState(['isPhotopackSenderVisible']),
-  },
   methods: {
     setPhotoPackView(val) {
-      console.log(val)
-      return val === true || false
-        ? this.$store.dispatch('setIsPhotopackSenderVisible', val)
-        : false
+      this.$emit('photopack_change_status', val)
     },
   },
 }

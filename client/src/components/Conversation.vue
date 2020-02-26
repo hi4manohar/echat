@@ -16,10 +16,8 @@
 							.timestamp {{ message.msgTime | timeFormat }}
 					span {{ message.msgTime | fulltimeFormat }}
 		v-row(v-if="active.profileId")
-			PhotopackSender
-		ChatInteract(
-			displayPhotoPack="(active.profileId) ? true : false"
-		)
+			PhotopackSender(v-on:photopack_change_status="showphotopack" :photopackStatus="meta")
+		ChatInteract(v-on:photopack_change_status="showphotopack")
 </template>
 
 <script>
@@ -42,19 +40,17 @@ export default {
   data: () => ({
     messages: {},
     userProfile: {},
+    meta: {
+      isPhotopackSenderVisible: false,
+    },
   }),
   computed: {
-    ...mapState([
-      'active',
-      'linkedProfiles',
-      'linkedUsers',
-      'isPhotopackSenderVisible',
-    ]),
+    ...mapState(['active', 'linkedProfiles', 'linkedUsers']),
     // @TODO note how I can set a class using vue, use this
     // new class to modify styles and display photopack correctly
     conversationContainerClass() {
       return {
-        'conversation--photopack-visible': this.isPhotopackSenderVisible,
+        'conversation--photopack-visible': this.meta.isPhotopackSenderVisible,
       }
     },
     fbRef() {
@@ -74,6 +70,9 @@ export default {
     },
   },
   methods: {
+    showphotopack(val) {
+      this.meta.isPhotopackSenderVisible = val
+    },
     loadUserProfile() {
       if (!this.active['userId']) return false
       this.userProfile = this.getProfile(this.active['userId'])
