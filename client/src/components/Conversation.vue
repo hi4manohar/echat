@@ -16,8 +16,8 @@
 							.timestamp {{ message.msgTime | timeFormat }}
 					span {{ message.msgTime | fulltimeFormat }}
 		v-row(v-if="active.profileId")
-			PhotopackSender(v-on:photopack_change_status="showphotopack" :photopackStatus="meta")
-		ChatInteract(v-on:photopack_change_status="showphotopack")
+			PhotopackSender(v-on:photopackChangeStatus="showPhotopack" :photopackStatus="meta")
+		ChatInteract(v-on:photopackChangeStatus="showPhotopack")
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
     },
   },
   methods: {
-    showphotopack(val) {
+    showPhotopack(val) {
       this.meta.isPhotopackSenderVisible = val
     },
     loadUserProfile() {

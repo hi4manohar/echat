@@ -97,7 +97,7 @@ export default {
         return (this.defaultActive = type)
     },
     changePhotopackStatus(val) {
-      this.$emit('photopack_change_status', val)
+      this.$emit('photopackChangeStatus', val)
     },
   },
 }

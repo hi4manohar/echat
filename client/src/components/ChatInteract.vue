@@ -20,7 +20,7 @@ export default {
   props: ['displayPhotoPack'],
   methods: {
     setPhotoPackView(val) {
-      this.$emit('photopack_change_status', val)
+      this.$emit('photopackChangeStatus', val)
     },
   },
 }
