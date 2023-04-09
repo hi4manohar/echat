@@ -14,14 +14,36 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import fb from '../db/firebase'
+import 'firebase/auth'
+import 'firebase/database'
+
 export default {
   name: 'ChatInteract',
   data: () => ({}),
+  computed: {
+  	...mapState(['active']),
+  },
   props: ['displayPhotoPack'],
   methods: {
     setPhotoPackView(val) {
+    	this.addConversation();
       this.$emit('photopackChangeStatus', val)
     },
+    addConversation() {
+    	var conversation = {
+    		fromAgent: this.active['profileId'],
+    		msgBody: 'Welcome to chat',
+    		msgTime: fb.fbTimestamp,
+    		mId: fb.db.ref().child("messages").push().getKey()
+    	}
+    	console.log(conversation);
+
+    	fb.db.ref().child("messages").child(conversation.mId).set(conversation);
+    	fb.db.ref().child("lastMsg").set(conversation);
+    	// fb.database().child("userUnreadMsgCount").setValue(cvsObj.userUnreadMsgCount);
+    }
   },
 }
 </script>
